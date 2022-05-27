@@ -1,0 +1,22 @@
+{
+  "name": "ad-data",
+  "version": "1.0.0",
+  "description": "Repo for creating dummy data in our database. Not for production",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tm-pe2/ad-data.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tm-pe2/ad-data/issues"
+  },
+  "homepage": "https://github.com/tm-pe2/ad-data#readme",
+  "devDependencies": {
+    "@faker-js/faker": "^7.1.0"
+  }
+}
