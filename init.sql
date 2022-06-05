@@ -10,6 +10,14 @@ CREATE TABLE IF NOT EXISTS users (
     active BOOLEAN NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS refreshtokens (
+    id SERIAL PRIMARY KEY,
+    token VARCHAR(50) NOT NULL,
+    expiry_date DATE NOT NULL,
+    user_id INT NOT NULL,
+    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
 CREATE TABLE IF NOT EXISTS roles (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50),

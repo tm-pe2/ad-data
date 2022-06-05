@@ -1,6 +1,6 @@
 const amountOfData = 20;
 //documentation: https://fakerjs.dev/guide/
-const { faker } = require('@faker-js/faker');
+import { faker } from '@faker-js/faker';
 
 faker.setLocale('nl_BE');
 

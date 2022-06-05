@@ -1,4 +1,4 @@
-INSERT INTO contracts_status (name, description) 
+INSERT INTO contracts_status (name,description) 
 VALUES
     ('Not Validated', 'When a contract is created but the meter values are not read yet and the contracted has not started.'),
     ('Active', 'Meters are read and the contract has started'),
