@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/tm-pe2/ad-data#readme",
   "devDependencies": {
-    "@faker-js/faker": "^7.1.0"
+    "@faker-js/faker": "^7.1.0",
+    "typescript": "^4.7.3"
   }
 }
