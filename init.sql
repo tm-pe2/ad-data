@@ -67,9 +67,7 @@ CREATE TABLE IF NOT EXISTS customers (
 
 CREATE TABLE IF NOT EXISTS employees (
     user_id INT NOT NULL,
-    department VARCHAR(50) NOT NULL,
     hire_date DATE NOT NULL,
-    gender SMALLINT NOT NULL,
     salary REAL NOT NULL,
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
 );
@@ -100,6 +98,7 @@ CREATE TABLE IF NOT EXISTS estimations (
 CREATE TABLE IF NOT EXISTS tariffs (
     id SERIAL PRIMARY KEY,
     customer_type_id INT NOT NULL,
+    service_type VARCHAR(50) NOT NULL,
     value REAL NOT NULL,
     CONSTRAINT fk_customer_type FOREIGN KEY(customer_type_id) REFERENCES customers_types(id)
 );
@@ -117,7 +116,6 @@ CREATE TABLE IF NOT EXISTS contracts (
     tariff_id INT NOT NULL,
     estimation_id INT NOT NULL,
     address_id INT NOT NULL,
-    service_type INT NOT NULL,
     status_id INT NOT NULL,
     CONSTRAINT fk_tariff FOREIGN KEY(tariff_id) REFERENCES tariffs(id),
     CONSTRAINT fk_estimation FOREIGN KEY(estimation_id) REFERENCES estimations(id),
