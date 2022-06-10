@@ -70,21 +70,13 @@ function generateUser(): User {
         phone_number: phoneNumber,
         email: email,
         national_registry_number: national_registryNumber,
+        password: "password123",
         active: true
     }
 
     return usr;
 }
 
-//passwords
-async function genHshedPAssword(): Promise<string> {
-    let hashedPw: string = '';
-    
-    const salt = await bcrypt.genSalt(10);
-    hashedPw = await bcrypt.hash('password123', salt);
-    
-    return hashedPw;
-}
 
 for(let i = 0; i < 20; i++) {
     addresses.push(generateAddress());
@@ -93,7 +85,6 @@ for(let i = 0; i < 20; i++) {
 
 export const addUsers = async() => {
     for(let i = 0; i < 20; i++){
-        users[i].password = await genHshedPAssword();
         // do http calls
     }
     console.log(addresses);
