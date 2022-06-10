@@ -39,7 +39,9 @@ VALUES
     ('Late'),
     ('Paid');
 
-INSERT INTO tariffs(customer_type, value)
+INSERT INTO tariffs(customer_type, service_type, value)
 VALUES
-    (1,0.291),
-    (2,0.106);
+    (1,'Electricity',0.291),
+    (2,'Electricity',0.106),
+    (1,'Gas',0.068),
+    (2,'Gas',0.046);
