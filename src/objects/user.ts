@@ -133,10 +133,6 @@ for(let i = 0; i < 20; i++) {
     }
 }
 
-for(let i = 0; i < 15; i++) {
-    
-}
-
 export const addUsers = async() => {
     for(let i = 0; i < 20; i++){
         // do http calls
