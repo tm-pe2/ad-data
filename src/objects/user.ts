@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Address } from '../models/address';
 import { Customer, Employee, User } from '../models/user';
-import { CustomerType, UserRole } from '../files/enums';
+import fetch from 'node-fetch';
 
 faker.setLocale('nl_BE');
 let users: User[] = [];
@@ -73,14 +73,14 @@ function generateUser(): User {
         national_registry_number: national_registryNumber,
         password: "password123",
         active: true,
-        address: []
+        addresses: []
     }
 
     randAddressNumber = getRandomInt(1,3);
 
     for(let i = 0; i < randAddressNumber; i++)
     {
-        usr.address.push(generateAddress());
+        usr.addresses.push(generateAddress());
     }
 
     return usr;
@@ -96,8 +96,8 @@ function generateCustomer(user: User): Customer {
         national_registry_number: user.national_registry_number,
         password: user.password,
         active: user.active,
-        address: user.address,
-        type: getRandomInt(1,2)
+        addresses: user.addresses,
+        type_id: getRandomInt(1,2)
     }
 
     return customer;
@@ -113,7 +113,7 @@ function generateEmployee(user: User): Employee {
         national_registry_number: user.national_registry_number,
         password: user.password,
         active: user.active,
-        address: user.address,
+        addresses: user.addresses,
         hire_date: faker.date.birthdate({min: 0, max: 42, mode: 'age'}), // returns a date = min today and max 42 years ago
         salary: parseFloat(faker.finance.amount(900.00, 5500.00, 2))
     }
@@ -135,13 +135,25 @@ for(let i = 0; i < 20; i++) {
 
 export const addUsers = async() => {
     for(let i = 0; i < 20; i++){
-        // do http calls
+        if(i < 15) {
+            const response = await fetch('http://localhost:3000/customers', {
+                method: 'POST',
+                body: JSON.stringify(customers[i]),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                }
+            });
+        }
+        else {
+            const response = await fetch('http://localhost:3000/employees', {
+                method: 'POST',
+                body: JSON.stringify(employees[i]),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                }
+            });
+        }
     }
-    customers.forEach(cus => {
-        console.log(cus);
-    });
-
-    employees.forEach(emp => {
-        console.log(emp);
-    });
 }

@@ -10,11 +10,11 @@ export interface User {
     national_registry_number?: string,
     password?: string,
     active: boolean,
-    address: Address[]
+    addresses: Address[]
 }
 
 export interface Customer extends User{
-    type: number
+    type_id: number
 }
 
 export interface Employee extends User{
