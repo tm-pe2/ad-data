@@ -115,7 +115,7 @@ function generateEmployee(user: User): Employee {
         active: user.active,
         address: user.address,
         hire_date: faker.date.birthdate({min: 0, max: 42, mode: 'age'}), // returns a date = min today and max 42 years ago
-        salary: parseFloat(faker.finance.amount(900.00, 5500.00, 2)) // TODO  float number for salary
+        salary: parseFloat(faker.finance.amount(900.00, 5500.00, 2))
     }
 
     return employee;
