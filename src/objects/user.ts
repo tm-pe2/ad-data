@@ -1,8 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Address } from '../models/address';
 import { User } from '../models/user';
-import { addAddresses } from '../objects/address';
-import * as bcrypt from 'bcrypt';
 
 faker.setLocale('nl_BE');
 let addresses: Address[] = [];
