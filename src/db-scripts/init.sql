@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS  users_roles (
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
-CREATE TABLE IF NOT EXISTS cities (
+CREATE TABLE cities (
     id SERIAL PRIMARY KEY,
     city_name VARCHAR(50) NOT NULL,
     postal_code INT NOT NULL
