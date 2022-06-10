@@ -1,3 +1,5 @@
+import { Address } from './address';
+
 export interface User {
     id?: number,
     first_name: string,
@@ -7,17 +9,15 @@ export interface User {
     phone_number: string,
     national_registry_number?: string,
     password?: string,
-    active: boolean
+    active: boolean,
+    address: Address[]
 }
 
-export enum UserRole {
-    customer = 1,
-    supplier = 2,
-    employee = 3,
-    accountant = 4,
-    technician = 5,
-    support = 6,
-    manager = 7,
-    hr_manager = 8,
-    admin = 9,
+export interface Customer extends User{
+    type: number
+}
+
+export interface Employee extends User{
+    hire_date: Date,
+    salary : number
 }

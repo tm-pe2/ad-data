@@ -1,10 +1,12 @@
 import { faker } from '@faker-js/faker';
 import { Address } from '../models/address';
-import { User } from '../models/user';
+import { Customer, Employee, User } from '../models/user';
+import { CustomerType, UserRole } from '../files/enums';
 
 faker.setLocale('nl_BE');
-let addresses: Address[] = [];
 let users: User[] = [];
+let customers: Customer[] = [];
+let employees: Employee[] = [];
 
 function getRandomInt(min:number ,max: number): number {
     min = Math.ceil(min);
@@ -54,6 +56,7 @@ function generateAddress(): Address {
 //user
 function generateUser(): User {
     
+    let randAddressNumber = 0;
     let firstName = faker.name.firstName();
     let lastName = faker.name.lastName();
     let birthDate = faker.date.birthdate({min: 18, max: 80, mode: 'age'});
@@ -69,22 +72,80 @@ function generateUser(): User {
         email: email,
         national_registry_number: national_registryNumber,
         password: "password123",
-        active: true
+        active: true,
+        address: []
+    }
+
+    randAddressNumber = getRandomInt(1,3);
+
+    for(let i = 0; i < randAddressNumber; i++)
+    {
+        usr.address.push(generateAddress());
     }
 
     return usr;
 }
 
+function generateCustomer(user: User): Customer {
+    let customer: Customer = {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        birth_date: user.birth_date,
+        phone_number: user.phone_number,
+        email: user.email,
+        national_registry_number: user.national_registry_number,
+        password: user.password,
+        active: user.active,
+        address: user.address,
+        type: getRandomInt(1,2)
+    }
+
+    return customer;
+}
+
+function generateEmployee(user: User): Employee {
+    let employee: Employee = {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        birth_date: user.birth_date,
+        phone_number: user.phone_number,
+        email: user.email,
+        national_registry_number: user.national_registry_number,
+        password: user.password,
+        active: user.active,
+        address: user.address,
+        hire_date: faker.date.birthdate({min: 0, max: 42, mode: 'age'}), // returns a date = min today and max 42 years ago
+        salary: parseFloat(faker.finance.amount(900.00, 5500.00, 2)) // TODO  float number for salary
+    }
+
+    return employee;
+}
 
 for(let i = 0; i < 20; i++) {
-    addresses.push(generateAddress());
     users.push(generateUser());
+    if( i < 15 ) 
+    {
+        customers.push(generateCustomer(users[i]));
+    }
+    else 
+    {
+        employees.push(generateEmployee(users[i]));
+    }
+}
+
+for(let i = 0; i < 15; i++) {
+    
 }
 
 export const addUsers = async() => {
     for(let i = 0; i < 20; i++){
         // do http calls
     }
-    console.log(addresses);
-    console.log(users);
+    customers.forEach(cus => {
+        console.log(cus);
+    });
+
+    employees.forEach(emp => {
+        console.log(emp);
+    });
 }
