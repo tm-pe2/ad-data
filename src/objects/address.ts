@@ -6,7 +6,7 @@ const cities: ICityPostCode[] = [];
 const filePath = path.resolve(__dirname, '../env/belgian-cities.csv');
 const data = fs.readFileSync(filePath, { encoding: 'utf-8' }).split('\n');
 
-const parseCities = async () => {
+function parseCities() {
     
     for(let i = 0; i < data.length; i++)
     {
@@ -21,7 +21,7 @@ const parseCities = async () => {
 
 
 export const addAddresses = async () => { 
-    await parseCities();
+    parseCities();
     console.log(cities);
     //do call to api
 }
