@@ -22,7 +22,7 @@ CREATE TABLE  users_roles (
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
-CREATE TABLE cities_postalcodes (
+CREATE TABLE cities (
     id SERIAL PRIMARY KEY,
     city_name VARCHAR(50) NOT NULL,
     postal_code INT NOT NULL
