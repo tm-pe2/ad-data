@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS roles (
     description VARCHAR(250)
 );
 
-CREATE TABLE IF NOT EXISTS  users_roles (
+CREATE TABLE IF NOT EXISTS users_roles (
     role_id INT NOT NULL,
     user_id INT NOT NULL,
     CONSTRAINT fk_role FOREIGN KEY(role_id) REFERENCES roles(id),
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS addresses (
     house_number VARCHAR(50) NOT NULL,
     city_id INT NOT NULL,
     country VARCHAR(50),
-    CONSTRAINT fk_city FOREIGN KEY(city_id) REFERENCES cities_postalcodes(id)
+    CONSTRAINT fk_city FOREIGN KEY(city_id) REFERENCES cities(id)
 );
 
 CREATE TABLE IF NOT EXISTS users_addresses (
