@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS estimations (
     building_type SMALLINT NOT NULL,
     address_id INT NOT NULL,
     family_size SMALLINT NOT NULL,
-    equipments VARCHAR(50) NOT NULL,
+    equipments INT[] NOT NULL,
     past_consumption REAL NOT NULL,
     estimated_consumption REAL NOT NULL,
     CONSTRAINT fk_address FOREIGN KEY(address_id) REFERENCES addresses(id)
