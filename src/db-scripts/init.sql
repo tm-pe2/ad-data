@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS contracts (
     status_id INT NOT NULL,
     CONSTRAINT fk_tariff FOREIGN KEY(tariff_id) REFERENCES tariffs(id),
     CONSTRAINT fk_estimation FOREIGN KEY(estimation_id) REFERENCES estimations(id),
-    CONSTRAINT fk_address FOREIGN KEY(address_id) REFERENCES addresses(id)
+    CONSTRAINT fk_address FOREIGN KEY(address_id) REFERENCES addresses(id),
     CONSTRAINT fk_status FOREIGN KEY(status_id) REFERENCES contract_statuses(id)
 );
 
