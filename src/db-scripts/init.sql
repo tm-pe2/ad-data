@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS plannings (
     date DATE NOT NULL,
     status_id INT NOT NULL,
     CONSTRAINT fk_contract FOREIGN KEY(contract_id) REFERENCES contracts(id),
-    CONSTRAINT fk_status FOREIGN KEY(status_id) REFERENCES plannings_statuses(id)
+    CONSTRAINT fk_status FOREIGN KEY(status_id) REFERENCES planning_statuses(id)
 );
 
 CREATE TABLE IF NOT EXISTS meters (
