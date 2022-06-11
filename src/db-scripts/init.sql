@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS meters (
     physical_id INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS indexes_values (
+CREATE TABLE IF NOT EXISTS indexed_values (
     id SERIAL PRIMARY KEY,
     meter_id INT NOT NULL,
     index_value INT NOT NULL,
@@ -172,12 +172,12 @@ CREATE TABLE IF NOT EXISTS contracts_meters (
     CONSTRAINT fk_meter FOREIGN KEY(meter_id) REFERENCES meters(id)
 );
 
-CREATE TABLE IF NOT EXISTS statuses_for_invoices (
+CREATE TABLE IF NOT EXISTS invoice_statuses (
     id SERIAL PRIMARY KEY,
     description VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS invoices_types (
+CREATE TABLE IF NOT EXISTS invoice_types (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     description VARCHAR(250) NOT NULL
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS invoices (
     period_end DATE NOT NULL,
     CONSTRAINT fk_contract FOREIGN KEY(contract_id) REFERENCES contracts(id),
     CONSTRAINT fk_supplier FOREIGN KEY(supplier_id) REFERENCES users(id),
-    CONSTRAINT fk_type FOREIGN KEY(type_id) REFERENCES invoices_types(id),
+    CONSTRAINT fk_type FOREIGN KEY(type_id) REFERENCES invoice_types(id),
     CONSTRAINT fk_tariff FOREIGN KEY(tariff_id) REFERENCES tariffs(id)
 );
 
@@ -205,5 +205,5 @@ CREATE TABLE IF NOT EXISTS invoices_statuses (
     invoice_id INT NOT NULL,
     status_id INT NOT NULL,
     CONSTRAINT fk_invoice FOREIGN KEY(invoice_id) REFERENCES invoices(id),
-    CONSTRAINT fk_status FOREIGN KEY(status_id) REFERENCES statuses_for_invoices(id)
+    CONSTRAINT fk_status FOREIGN KEY(status_id) REFERENCES invoice_statuses(id)
 );
