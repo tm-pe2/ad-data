@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS users_addresses (
     CONSTRAINT fk_address FOREIGN KEY(address_id) REFERENCES addresses(id)
 );
 
-CREATE TABLE IF NOT EXISTS customers_types (
+CREATE TABLE IF NOT EXISTS customer_types (
     id SERIAL PRIMARY KEY,
     description VARCHAR(50) NOT NULL
 );
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS tariffs (
     CONSTRAINT fk_customer_type FOREIGN KEY(customer_type_id) REFERENCES customers_types(id)
 );
 
-CREATE TABLE IF NOT EXISTS contracts_status (
+CREATE TABLE IF NOT EXISTS contract_statuses (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL ,
     description VARCHAR(250) NOT NULL
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS customers_contracts (
     CONSTRAINT fk_contract FOREIGN KEY(contract_id) REFERENCES contracts(id)
 );
 
-CREATE TABLE IF NOT EXISTS plannings_statuses (
+CREATE TABLE IF NOT EXISTS planning_statuses (
     id SERIAL PRIMARY KEY,
     description VARCHAR(50) NOT NULL
 );
