@@ -73,12 +73,11 @@ CREATE TABLE IF NOT EXISTS employees (
 );
 
 CREATE TABLE IF NOT EXISTS suppliers (
-    user_id INT NOT NULL,
-    contact_name VARCHAR(50),
+    address_id INT NOT NULL,
     company_name VARCHAR(50) NOT NULL,
-    supply_type VARCHAR(50) NOT NULL,
+    service_type VARCHAR(50) NOT NULL,
     vat_number VARCHAR(50) NOT NULL,
-    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
+    CONSTRAINT fk_address FOREIGN KEY(address_id) REFERENCES addresses(id)
 );
 
 CREATE TABLE IF NOT EXISTS estimations (
