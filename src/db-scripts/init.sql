@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS addresses (
     street VARCHAR(50) NOT NULL,
     house_number VARCHAR(50) NOT NULL,
     city_id INT NOT NULL,
-    country VARCHAR(50) NOT NULL,
+    country VARCHAR(50),
     CONSTRAINT fk_city FOREIGN KEY(city_id) REFERENCES cities(id)
 );
 
