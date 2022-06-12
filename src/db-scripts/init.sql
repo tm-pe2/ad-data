@@ -111,8 +111,8 @@ CREATE TABLE IF NOT EXISTS contracts_status (
 
 CREATE TABLE IF NOT EXISTS contracts (
     id SERIAL PRIMARY KEY,
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
+    start_date DATE,
+    end_date DATE,
     tariff_id INT NOT NULL,
     estimation_id INT NOT NULL,
     address_id INT NOT NULL,
@@ -145,8 +145,8 @@ CREATE TABLE IF NOT EXISTS plannings (
 
 CREATE TABLE IF NOT EXISTS meters (
     id SERIAL PRIMARY KEY,
-    meter_type VARCHAR(50) NOT NULL,
-    physical_id INT NOT NULL
+    meter_type VARCHAR(50),
+    physical_id INT
 );
 
 CREATE TABLE IF NOT EXISTS indexes_values (
