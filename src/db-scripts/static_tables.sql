@@ -14,7 +14,7 @@ INSERT INTO invoice_types (name,description)
 VALUES
     ('Advance Payment', 'Invoicing each month a fixed amount based on the estimated consumption'),
     ('Debit Note','End of year invoice to be paid by customer'),
-    ('Credit Note', "End of year invoice in customer's favour");
+    ('Credit Note', 'End of year invoice in customer''s favour');
 
 INSERT INTO planning_statuses (description) 
 VALUES
@@ -39,7 +39,7 @@ VALUES
     ('Late'),
     ('Paid');
 
-INSERT INTO tariffs(customer_type, service_type, value)
+INSERT INTO tariffs(customer_type_id, service_type, value)
 VALUES
     (1,1,0.291),
     (2,1,0.106),
