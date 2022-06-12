@@ -113,8 +113,8 @@ CREATE TABLE IF NOT EXISTS contract_statuses (
 
 CREATE TABLE IF NOT EXISTS contracts (
     id SERIAL PRIMARY KEY,
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
+    start_date DATE,
+    end_date DATE,
     tariff_id INT NOT NULL,
     estimation_id INT NOT NULL,
     address_id INT NOT NULL,
