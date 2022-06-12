@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS plannings (
 
 CREATE TABLE IF NOT EXISTS meters (
     id SERIAL PRIMARY KEY,
-    meter_type VARCHAR(50),
+    meter_type VARCHAR(50) NOT NULL,
     physical_id INT
 );
 
