@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS employees (
 );
 
 CREATE TABLE IF NOT EXISTS suppliers (
+    id SERIAL PRIMARY KEY,
     address_id INT NOT NULL,
     company_name VARCHAR(50) NOT NULL,
     service_type VARCHAR(50) NOT NULL,
