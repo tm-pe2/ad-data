@@ -24,9 +24,10 @@ CREATE TABLE IF NOT EXISTS roles (
     description VARCHAR(250)
 );
 
-CREATE TABLE IF NOT EXISTS  users_roles (
+CREATE TABLE IF NOT EXISTS users_roles (
     role_id INT NOT NULL,
     user_id INT NOT NULL,
+    PRIMARY KEY(role_id, user_id),
     CONSTRAINT fk_role FOREIGN KEY(role_id) REFERENCES roles(id),
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
 );
@@ -43,17 +44,18 @@ CREATE TABLE IF NOT EXISTS addresses (
     house_number VARCHAR(50) NOT NULL,
     city_id INT NOT NULL,
     country VARCHAR(50),
-    CONSTRAINT fk_city FOREIGN KEY(city_id) REFERENCES cities_postalcodes(id)
+    CONSTRAINT fk_city FOREIGN KEY(city_id) REFERENCES cities(id)
 );
 
 CREATE TABLE IF NOT EXISTS users_addresses (
     user_id INT NOT NULL,
     address_id INT NOT NULL,
+    PRIMARY KEY(user_id, address_id),
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id),
     CONSTRAINT fk_address FOREIGN KEY(address_id) REFERENCES addresses(id)
 );
 
-CREATE TABLE IF NOT EXISTS customers_types (
+CREATE TABLE IF NOT EXISTS customer_types (
     id SERIAL PRIMARY KEY,
     description VARCHAR(50) NOT NULL
 );
@@ -62,7 +64,7 @@ CREATE TABLE IF NOT EXISTS customers (
     user_id INT NOT NULL,
     type_id INT NOT NULL,
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id),
-    CONSTRAINT fk_type FOREIGN KEY(type_id) REFERENCES customers_types(id)
+    CONSTRAINT fk_type FOREIGN KEY(type_id) REFERENCES customer_types(id)
 );
 
 CREATE TABLE IF NOT EXISTS employees (
@@ -87,7 +89,7 @@ CREATE TABLE IF NOT EXISTS estimations (
     building_type SMALLINT NOT NULL,
     address_id INT NOT NULL,
     family_size SMALLINT NOT NULL,
-    equipments VARCHAR(50) NOT NULL,
+    equipments INT[] NOT NULL,
     past_consumption REAL NOT NULL,
     estimated_consumption REAL NOT NULL,
     CONSTRAINT fk_address FOREIGN KEY(address_id) REFERENCES addresses(id)
@@ -98,12 +100,12 @@ CREATE TABLE IF NOT EXISTS estimations (
 CREATE TABLE IF NOT EXISTS tariffs (
     id SERIAL PRIMARY KEY,
     customer_type_id INT NOT NULL,
-    service_type VARCHAR(50) NOT NULL,
+    service_type INT NOT NULL,
     value REAL NOT NULL,
-    CONSTRAINT fk_customer_type FOREIGN KEY(customer_type_id) REFERENCES customers_types(id)
+    CONSTRAINT fk_customer_type FOREIGN KEY(customer_type_id) REFERENCES customer_types(id)
 );
 
-CREATE TABLE IF NOT EXISTS contracts_status (
+CREATE TABLE IF NOT EXISTS contract_statuses (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL ,
     description VARCHAR(250) NOT NULL
@@ -119,17 +121,19 @@ CREATE TABLE IF NOT EXISTS contracts (
     status_id INT NOT NULL,
     CONSTRAINT fk_tariff FOREIGN KEY(tariff_id) REFERENCES tariffs(id),
     CONSTRAINT fk_estimation FOREIGN KEY(estimation_id) REFERENCES estimations(id),
-    CONSTRAINT fk_address FOREIGN KEY(address_id) REFERENCES addresses(id)
+    CONSTRAINT fk_address FOREIGN KEY(address_id) REFERENCES addresses(id),
+    CONSTRAINT fk_status FOREIGN KEY(status_id) REFERENCES contract_statuses(id)
 );
 
 CREATE TABLE IF NOT EXISTS customers_contracts (
     user_id INT NOT NULL,
     contract_id INT NOT NULL,
+    PRIMARY KEY(user_id, contract_id),
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id),
     CONSTRAINT fk_contract FOREIGN KEY(contract_id) REFERENCES contracts(id)
 );
 
-CREATE TABLE IF NOT EXISTS plannings_statuses (
+CREATE TABLE IF NOT EXISTS planning_statuses (
     id SERIAL PRIMARY KEY,
     description VARCHAR(50) NOT NULL
 );
@@ -140,7 +144,7 @@ CREATE TABLE IF NOT EXISTS plannings (
     date DATE NOT NULL,
     status_id INT NOT NULL,
     CONSTRAINT fk_contract FOREIGN KEY(contract_id) REFERENCES contracts(id),
-    CONSTRAINT fk_status FOREIGN KEY(status_id) REFERENCES plannings_statuses(id)
+    CONSTRAINT fk_status FOREIGN KEY(status_id) REFERENCES planning_statuses(id)
 );
 
 CREATE TABLE IF NOT EXISTS meters (
@@ -149,7 +153,7 @@ CREATE TABLE IF NOT EXISTS meters (
     physical_id INT
 );
 
-CREATE TABLE IF NOT EXISTS indexes_values (
+CREATE TABLE IF NOT EXISTS indexed_values (
     id SERIAL PRIMARY KEY,
     meter_id INT NOT NULL,
     index_value INT NOT NULL,
@@ -168,16 +172,17 @@ CREATE TABLE IF NOT EXISTS consumptions (
 CREATE TABLE IF NOT EXISTS contracts_meters (
     contract_id INT NOT NULL,
     meter_id INT NOT NULL,
+    PRIMARY KEY(contract_id, meter_id),
     CONSTRAINT fk_contract FOREIGN KEY(contract_id) REFERENCES contracts(id),
     CONSTRAINT fk_meter FOREIGN KEY(meter_id) REFERENCES meters(id)
 );
 
-CREATE TABLE IF NOT EXISTS statuses_for_invoices (
+CREATE TABLE IF NOT EXISTS invoice_statuses (
     id SERIAL PRIMARY KEY,
     description VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS invoices_types (
+CREATE TABLE IF NOT EXISTS invoice_types (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     description VARCHAR(250) NOT NULL
@@ -197,13 +202,14 @@ CREATE TABLE IF NOT EXISTS invoices (
     period_end DATE NOT NULL,
     CONSTRAINT fk_contract FOREIGN KEY(contract_id) REFERENCES contracts(id),
     CONSTRAINT fk_supplier FOREIGN KEY(supplier_id) REFERENCES users(id),
-    CONSTRAINT fk_type FOREIGN KEY(type_id) REFERENCES invoices_types(id),
+    CONSTRAINT fk_type FOREIGN KEY(type_id) REFERENCES invoice_types(id),
     CONSTRAINT fk_tariff FOREIGN KEY(tariff_id) REFERENCES tariffs(id)
 );
 
 CREATE TABLE IF NOT EXISTS invoices_statuses (
     invoice_id INT NOT NULL,
     status_id INT NOT NULL,
+    PRIMARY KEY(invoice_id, status_id),
     CONSTRAINT fk_invoice FOREIGN KEY(invoice_id) REFERENCES invoices(id),
-    CONSTRAINT fk_status FOREIGN KEY(status_id) REFERENCES statuses_for_invoices(id)
+    CONSTRAINT fk_status FOREIGN KEY(status_id) REFERENCES invoice_statuses(id)
 );
