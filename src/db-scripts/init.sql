@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS estimations (
 CREATE TABLE IF NOT EXISTS tariffs (
     id SERIAL PRIMARY KEY,
     customer_type_id INT NOT NULL,
-    service_type VARCHAR(50) NOT NULL,
+    service_type INT NOT NULL,
     value REAL NOT NULL,
     CONSTRAINT fk_customer_type FOREIGN KEY(customer_type_id) REFERENCES customer_types(id)
 );
