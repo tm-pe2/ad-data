@@ -1,3 +1,4 @@
+import { UserRole } from './enums';
 import { Address } from './address';
 
 export interface User {
@@ -14,10 +15,11 @@ export interface User {
 }
 
 export interface Customer extends User{
-    type_id: number
+    customer_type: number
 }
 
 export interface Employee extends User{
+    roles: UserRole[]
     hire_date: Date,
     salary : number
 }
