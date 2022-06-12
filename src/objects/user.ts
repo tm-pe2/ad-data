@@ -1,10 +1,13 @@
 import { faker } from '@faker-js/faker';
 import { Address } from '../models/address';
-import { User } from '../models/user';
+import { Customer, Employee, User } from '../models/user';
+import fetch from 'node-fetch';
+import { UserRole } from '../models/enums';
 
 faker.setLocale('nl_BE');
-let addresses: Address[] = [];
 let users: User[] = [];
+let customers: Customer[] = [];
+let employees: Employee[] = [];
 
 function getRandomInt(min:number ,max: number): number {
     min = Math.ceil(min);
@@ -54,6 +57,7 @@ function generateAddress(): Address {
 //user
 function generateUser(): User {
     
+    let randAddressNumber = 0;
     let firstName = faker.name.firstName();
     let lastName = faker.name.lastName();
     let birthDate = faker.date.birthdate({min: 18, max: 80, mode: 'age'});
@@ -69,22 +73,107 @@ function generateUser(): User {
         email: email,
         national_registry_number: national_registryNumber,
         password: "password123",
-        active: true
+        active: true,
+        addresses: []
+    }
+
+    randAddressNumber = getRandomInt(1,3);
+
+    for(let i = 0; i < randAddressNumber; i++)
+    {
+        usr.addresses.push(generateAddress());
     }
 
     return usr;
 }
 
+function generateCustomer(user: User): Customer {
 
-for(let i = 0; i < 20; i++) {
-    addresses.push(generateAddress());
+    let customer: Customer = {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        birth_date: user.birth_date,
+        phone_number: user.phone_number,
+        email: user.email,
+        national_registry_number: user.national_registry_number,
+        password: user.password,
+        active: user.active,
+        addresses: user.addresses,
+        customer_type: getRandomInt(1,2)
+    }
+
+    return customer;
+}
+
+function generateEmployee(user: User): Employee {
+
+    let employee: Employee = {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        birth_date: user.birth_date,
+        phone_number: user.phone_number,
+        email: user.email,
+        national_registry_number: user.national_registry_number,
+        password: user.password,
+        active: user.active,
+        roles: [],
+        addresses: user.addresses,
+        hire_date: faker.date.birthdate({min: 0, max: 42, mode: 'age'}), // returns a date = min today and max 42 years ago
+        salary: parseFloat(faker.finance.amount(900.00, 5500.00, 2))
+    }
+
+    return employee;
+}
+
+let role: UserRole[] = [UserRole.ADMIN,UserRole.EMPLOYEE,UserRole.MANAGER,UserRole.HR_MANAGER];
+let j: number = 0;
+
+for(let i = 0; i < 10; i++) {
     users.push(generateUser());
+    if( i < 5 ) 
+    {
+        customers.push(generateCustomer(users[i]));
+    }
+    else 
+    {
+        if( j < 4 ) 
+        {
+            //console.log("CURRENT ROLE : " + role[j]);
+            const tempEmployee: Employee = generateEmployee(users[i]);
+            tempEmployee.roles?.push(role[j]);
+            employees.push(tempEmployee);
+        } 
+        else 
+        {
+            j = 0;
+            const tempEmployee: Employee = generateEmployee(users[i]);
+            tempEmployee.roles?.push(role[j]);
+            employees.push(tempEmployee);
+        }
+        j++;
+    }
 }
 
 export const addUsers = async() => {
-    for(let i = 0; i < 20; i++){
-        // do http calls
+    for(let i = 0; i < 5; i++){
+        const response = await fetch('http://localhost:3000/customers', {
+            method: 'POST',
+            body: JSON.stringify(customers[i]),
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            }
+        });
     }
-    console.log(addresses);
-    console.log(users);
+
+    for(let i = 0; i < 5; i++){
+        const response = await fetch('http://localhost:3000/employees', {
+            method: 'POST',
+            body: JSON.stringify(employees[i]),
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            }
+        });
+    }
 }

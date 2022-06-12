@@ -1,3 +1,6 @@
+import { UserRole } from './enums';
+import { Address } from './address';
+
 export interface User {
     id?: number,
     first_name: string,
@@ -7,17 +10,16 @@ export interface User {
     phone_number: string,
     national_registry_number?: string,
     password?: string,
-    active: boolean
+    active: boolean,
+    addresses: Address[]
 }
 
-export enum UserRole {
-    customer = 1,
-    supplier = 2,
-    employee = 3,
-    accountant = 4,
-    technician = 5,
-    support = 6,
-    manager = 7,
-    hr_manager = 8,
-    admin = 9,
+export interface Customer extends User{
+    customer_type: number
+}
+
+export interface Employee extends User{
+    roles: UserRole[]
+    hire_date: Date,
+    salary : number
 }
