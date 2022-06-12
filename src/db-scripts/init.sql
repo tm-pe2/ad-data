@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS refreshtokens (
 
 CREATE TABLE IF NOT EXISTS roles (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(50),
+    name VARCHAR(50) NOT NULL,
     description VARCHAR(250)
 );
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS addresses (
     street VARCHAR(50) NOT NULL,
     house_number VARCHAR(50) NOT NULL,
     city_id INT NOT NULL,
-    country VARCHAR(50),
+    country VARCHAR(50) NOT NULL,
     CONSTRAINT fk_city FOREIGN KEY(city_id) REFERENCES cities(id)
 );
 
@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS customer_types (
 CREATE TABLE IF NOT EXISTS customers (
     user_id INT NOT NULL,
     type_id INT NOT NULL,
+    PRIMARY KEY(user_id, type_id),
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id),
     CONSTRAINT fk_type FOREIGN KEY(type_id) REFERENCES customer_types(id)
 );
@@ -75,24 +76,22 @@ CREATE TABLE IF NOT EXISTS employees (
 );
 
 CREATE TABLE IF NOT EXISTS suppliers (
-    user_id INT NOT NULL,
-    contact_name VARCHAR(50),
+    id SERIAL PRIMARY KEY,
+    address_id INT NOT NULL,
     company_name VARCHAR(50) NOT NULL,
-    supply_type VARCHAR(50) NOT NULL,
+    service_type VARCHAR(50) NOT NULL,
     vat_number VARCHAR(50) NOT NULL,
-    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
+    CONSTRAINT fk_address FOREIGN KEY(address_id) REFERENCES addresses(id)
 );
 
 CREATE TABLE IF NOT EXISTS estimations (
     id SERIAL PRIMARY KEY,
     service_type INT NOT NULL,
     building_type SMALLINT NOT NULL,
-    address_id INT NOT NULL,
     family_size SMALLINT NOT NULL,
     equipments INT[] NOT NULL,
     past_consumption REAL NOT NULL,
-    estimated_consumption REAL NOT NULL,
-    CONSTRAINT fk_address FOREIGN KEY(address_id) REFERENCES addresses(id)
+    estimated_consumption REAL NOT NULL
 );
 
 /*https://www.globalpetrolprices.com/Belgium/electricity_prices/#hl183*/
