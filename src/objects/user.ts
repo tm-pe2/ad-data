@@ -8,6 +8,8 @@ faker.setLocale('nl_BE');
 let users: User[] = [];
 let customers: Customer[] = [];
 let employees: Employee[] = [];
+let role: UserRole[] = [UserRole.ADMIN,UserRole.EMPLOYEE,UserRole.MANAGER,UserRole.HR_MANAGER];
+let j: number = 0;
 
 function getRandomInt(min:number ,max: number): number {
     min = Math.ceil(min);
@@ -15,6 +17,7 @@ function getRandomInt(min:number ,max: number): number {
     return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
 }
 
+//registry number
 function generateRegistryNumber(day: number, month: number, year: number): string {
     let nrn : string = '';
     let randLastThreeDigits : number = getRandomInt(100,999);
@@ -87,6 +90,7 @@ function generateUser(): User {
     return usr;
 }
 
+//customer
 function generateCustomer(user: User): Customer {
 
     let customer: Customer = {
@@ -105,6 +109,7 @@ function generateCustomer(user: User): Customer {
     return customer;
 }
 
+//emplyee
 function generateEmployee(user: User): Employee {
 
     let employee: Employee = {
@@ -125,9 +130,7 @@ function generateEmployee(user: User): Employee {
     return employee;
 }
 
-let role: UserRole[] = [UserRole.ADMIN,UserRole.EMPLOYEE,UserRole.MANAGER,UserRole.HR_MANAGER];
-let j: number = 0;
-
+//fill array of employees and custoamers
 for(let i = 0; i < 10; i++) {
     users.push(generateUser());
     if( i < 5 ) 
@@ -154,6 +157,7 @@ for(let i = 0; i < 10; i++) {
     }
 }
 
+//add employees to db
 export const addUsers = async() => {
     for(let i = 0; i < 5; i++){
         const response = await fetch('http://localhost:3000/customers', {

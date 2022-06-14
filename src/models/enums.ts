@@ -43,3 +43,28 @@ export enum CustomerType
     PRIVATE = 1,
     COMPANY = 2
 }
+
+export enum MeterType {
+    MANUAL = "Manual",
+    SMART = "Smart",
+}
+
+export enum BuildingType {
+    APARTMENT = 0,
+    CLOSED = 1,
+    SEMI_DETACHED = 2,
+    OPEN = 3,
+}
+
+export enum ServiceType {
+    ELECTRICITY = 1,
+    GAS = 2,
+}
+
+export enum EquipmentType {
+    OVEN_STOVE = 1,
+    DISHWATER = 2,
+    WASHING_MACHINE = 3,
+    DRYING_MACHINE = 4,
+    HAIR_DRYER = 5,
+}
