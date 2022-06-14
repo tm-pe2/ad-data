@@ -118,6 +118,7 @@ function getRandomMeterType(): MeterType {
     }
 }
 
+//generate meters per address
 function generateMeters(): Meter[] {
     let meters: Meter[] = [];
 
@@ -131,6 +132,7 @@ function generateMeters(): Meter[] {
     return meters;
 }
 
+//generate estimation object
 function generateEstimation(addressID: number): Estimation {
     let equipmentArray: number[] = [];
     let status: boolean = false;
@@ -162,7 +164,8 @@ function generateEstimation(addressID: number): Estimation {
     return estimation;
 }
 
-export const addEstimation = async () => {
+//generate all estimations
+const fillEstimationArray = async() => {
     let counter: number = 0;
     customers = await getCustomers(baseUrl);
 
@@ -179,4 +182,21 @@ export const addEstimation = async () => {
     estimations.forEach(estimation => {
         console.log(estimation);
     })
+}
+
+// add estimations to db
+export const addEstimation = async () => {
+    await fillEstimationArray();
+
+    for(let i = 0; i < estimations.length; i++){
+        const response = await fetch("http://localhost:3000/estimations", {
+            method: 'POST',
+            body: JSON.stringify(estimations[i]),
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            }
+        });
+        console.log(response);
+    }
 }

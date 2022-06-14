@@ -41,7 +41,7 @@ VALUES
 
 INSERT INTO tariffs(customer_type, service_type, value)
 VALUES
-    (1,'Electricity',0.291),
-    (2,'Electricity',0.106),
-    (1,'Gas',0.068),
-    (2,'Gas',0.046);
+    (1,1,0.291),
+    (2,1,0.106),
+    (1,2,0.068),
+    (2,2,0.046);
