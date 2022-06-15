@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS invoices (
     period_start DATE NOT NULL,
     period_end DATE NOT NULL,
     CONSTRAINT fk_contract FOREIGN KEY(contract_id) REFERENCES contracts(id),
-    CONSTRAINT fk_supplier FOREIGN KEY(supplier_id) REFERENCES users(id),
+    CONSTRAINT fk_supplier FOREIGN KEY(supplier_id) REFERENCES suppliers(id),
     CONSTRAINT fk_type FOREIGN KEY(type_id) REFERENCES invoice_types(id),
     CONSTRAINT fk_tariff FOREIGN KEY(tariff_id) REFERENCES tariffs(id)
 );
