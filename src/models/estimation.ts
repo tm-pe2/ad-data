@@ -14,5 +14,6 @@ export interface Estimation {
 export interface Meter {
     id?: number,
     physical_id?: number,
-    meter_type: MeterType
+    meter_type: MeterType,
+    index_value?: number
 }

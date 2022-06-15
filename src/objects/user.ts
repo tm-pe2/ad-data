@@ -157,7 +157,7 @@ for(let i = 0; i < 10; i++) {
     }
 }
 
-//add employees to db
+//add employees to database
 export const addUsers = async() => {
     for(let i = 0; i < 5; i++){
         const response = await fetch('http://localhost:3000/customers', {
