@@ -31,7 +31,7 @@ export interface Contract {
     start_date: Date,
     end_date: Date,
     estimation_id: number,
-    address: Address,
+    address_id: number,
     tariff_id: number,
     status: CONTRACT_STATUS,
 }

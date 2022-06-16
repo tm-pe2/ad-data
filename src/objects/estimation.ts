@@ -98,7 +98,7 @@ const getCustomers = async(url: string): Promise<Customer[]> => {
 //generate past_consumtion
 function generatePastConsumtion(estimation: number): number {
     //anual estimation = est * 365
-    let anualEstimation: number = estimation * 365;
+    let anualEstimation: number = estimation * 12;
 
     //generate estimation between - 10% of anual est & + 10% of est
     let estimationNumber = getRandomInt((anualEstimation - (anualEstimation * 0.1)), (anualEstimation + (anualEstimation * 0.1)));

@@ -10,7 +10,7 @@ const doWork = async () => {
     //await addEstimation();
     //await addFirstIndexedValues();
     //await addMissingConsumptions();
-    //await fillInvoicesArray();
+    await fillInvoicesArray();
     end();
 }
 
