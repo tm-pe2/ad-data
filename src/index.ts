@@ -5,7 +5,7 @@ import { end, execute, init } from './utils/database';
 
 const doWork = async () => {
     init();
-    addUsers();
+    await addUsers();
     await addEstimation();
     await addFirstIndexedValues();
     await addMissingConsumptions();
