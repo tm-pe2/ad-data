@@ -11,18 +11,10 @@ export enum UserRole
     ADMIN = 9
 }
 
-export enum ContractStatus
-{
-    NOTVALID = 1,
-    ACTIVE = 2,
-    EXPIRED = 3,
-}
-
-export enum InvoiceType
-{
-    ADVANCE = 1,
-    DEBIT = 2,
-    CREDIT = 3
+export enum CONTRACT_STATUS {
+    NOT_VALIDATED = 1,
+    ACTIVE,
+    EXPIRED,
 }
 
 export enum PlanningStatus
@@ -31,15 +23,45 @@ export enum PlanningStatus
     DONE = 2
 }
 
-export enum InvoiceStatus
-{
+export enum INVOICE_TYPE {
+    ADVANCE = 1,
+    DEBIT,
+    CREDIT,
+}
+
+export enum INVOICE_STATUS {
     DUE = 1,
-    LATE = 2,
-    PAID = 3
+    LATE,
+    PAID,
 }
 
 export enum CustomerType
 {
     PRIVATE = 1,
     COMPANY = 2
+}
+
+export enum MeterType {
+    MANUAL = "Manual",
+    SMART = "Smart",
+}
+
+export enum BuildingType {
+    APARTMENT = 0,
+    CLOSED = 1,
+    SEMI_DETACHED = 2,
+    OPEN = 3,
+}
+
+export enum ServiceType {
+    ELECTRICITY = 1,
+    GAS = 2,
+}
+
+export enum EquipmentType {
+    OVEN_STOVE = 1,
+    DISHWATER = 2,
+    WASHING_MACHINE = 3,
+    DRYING_MACHINE = 4,
+    HAIR_DRYER = 5,
 }
