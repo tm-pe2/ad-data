@@ -10,3 +10,10 @@ export interface ContractMeters {
     id: number,
     meters: Meter[]
 }
+
+export interface IndexedValues {
+    id?: number,
+    meter_id: number,
+    index_value: number,
+    read_date: Date
+}

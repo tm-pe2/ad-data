@@ -197,6 +197,6 @@ export const addEstimation = async () => {
                 Accept: 'application/json',
             }
         });
-        console.log(response);
+        console.log(response.statusText);
     }
 }

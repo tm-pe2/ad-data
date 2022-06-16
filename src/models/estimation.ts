@@ -1,4 +1,3 @@
-import { Address } from "./address";
 import { BuildingType, ServiceType, EquipmentType, MeterType } from './enums';
 
 export interface Estimation {
