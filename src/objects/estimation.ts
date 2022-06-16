@@ -166,7 +166,6 @@ function generateEstimation(addressID: number): Estimation {
 
 //generate all estimations
 const fillEstimationArray = async() => {
-    let counter: number = 0;
     customers = await getCustomers(baseUrl);
 
     for(let i = 0; i < customers.length; i++) {
@@ -175,20 +174,15 @@ const fillEstimationArray = async() => {
             let tempEstimationNumber = calculateEstimation(tempEstimation);
             tempEstimation.past_consumption = generatePastConsumtion(tempEstimationNumber);
             estimations.push(tempEstimation);
-            counter++;
         }
     }
-
-    estimations.forEach(estimation => {
-        console.log(estimation);
-    })
 }
 
 // add estimations to db
 export const addEstimation = async () => {
     await fillEstimationArray();
-
-    for(let i = 0; i < estimations.length; i++){
+    console.log("Adding estimations ...");
+    for(let i = 0; i <= estimations.length; i++){
         const response = await fetch("http://localhost:3000/estimations", {
             method: 'POST',
             body: JSON.stringify(estimations[i]),
@@ -197,6 +191,6 @@ export const addEstimation = async () => {
                 Accept: 'application/json',
             }
         });
-        console.log(response.statusText);
     }
+    console.log("Estimations added!");
 }

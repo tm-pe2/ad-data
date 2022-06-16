@@ -38,35 +38,36 @@ function getYearDiff(startDate: Date): number {
 //get missing consumptions
 const getMissingConsumptions = async (): Promise<Consumption[]> => {
     let consumptions: Consumption[] = [];
-
+    let currentDate: Date = new Date();
     indexedValues = await getAllIndexedValues();
-    indexedValues.forEach(iValue => {
-        numberOfConsumptionToGenerate.push(getYearDiff(iValue.read_date));
-    });
+    let counter = 0;
 
-    for(let i = 0; i < numberOfConsumptionToGenerate.length; i++) {
-        let startDate: Date = indexedValues[i].read_date;
-        //console.log(startDate);
-        let currentYearConsumtion = indexedValues[i].read_date.getFullYear();
-        for(let j = 0; j < numberOfConsumptionToGenerate[i]; j++) {
-            //generate consumption
-            // meter id should be the same
-            // index values > previus
-            // read date.year > prevoius read date.year
-            let meterToAdd: Meter[] = [];
-            let meter: Meter[] = await getMeterById(indexedValues[i].meter_id);
-            meter[0].index_value = getRandomInt(Number(indexedValues[i].index_value), Number(indexedValues[i].index_value) + 1000)
-            meterToAdd.push(meter[0]);
-            currentYearConsumtion++;
-            startDate.setFullYear(currentYearConsumtion)
+    for(let i = 0; i < indexedValues.length; i++) {
+        let startIndexValue: number = indexedValues[i].index_value;
+        let startDate: Date = new Date(indexedValues[i].read_date);
 
-            let tmpConsumption: Consumption = {
-                meters: meterToAdd,
-                read_date: new Date(startDate),
-                start_date: new Date(startDate)
-            }
-            consumptions.push(tmpConsumption);
+        //generate consumption
+        // meter id should be the same
+        // index values > previus
+        // read date.year > prevoius read date.year
+
+        startIndexValue += getRandomInt(300, 1500);
+        let meterToAdd: Meter[] = [];
+        let meter: Meter[] = await getMeterById(indexedValues[i].meter_id);
+        meter[0].index_value = startIndexValue;
+        meterToAdd.push(meter[0]);
+        if(startDate.getFullYear() < currentDate.getFullYear())
+        {
+            startDate.setFullYear(indexedValues[i].read_date.getFullYear() + 1)
         }
+        
+        let tmpConsumption: Consumption = {
+            meters: meterToAdd,
+            read_date: new Date(startDate),
+            start_date: new Date(startDate)
+        }
+        consumptions.push(tmpConsumption);
+        counter += 1;
     }
 
     return consumptions;
@@ -106,15 +107,12 @@ const fillConsumptionArray = async () => {
         }
         firstConsumptions.push(tempCons);
     });
-
-    // firstConsumptions.forEach(element => {
-    //     console.log(element);
-    // });
 }
 
 //fill in first meter readings and activate contract
 export const addFirstIndexedValues = async () => {
     await fillConsumptionArray();
+    console.log("Adding first readings ...\nActivating contracts ...")
     for(let i = 0; i < firstConsumptions.length; i++){
         const response = await fetch("http://localhost:3000/consumptions", {
             method: 'POST',
@@ -124,13 +122,14 @@ export const addFirstIndexedValues = async () => {
                 Accept: 'application/json',
             }
         });
-        console.log(response.statusText);
     }
+    console.log("First reading added!\nContracts activated!");
 }
 
 //add consumtions from start_date up until now
 export const addMissingConsumptions = async () => {
     const consumptions: Consumption[] = await getMissingConsumptions();
+    console.log("Adding missing indexed values ...")
     for(let i = 0; i < consumptions.length; i++) {
         const response = await fetch("http://localhost:3000/consumptions", {
             method: 'POST',
@@ -140,6 +139,6 @@ export const addMissingConsumptions = async () => {
                 Accept: 'application/json',
             }
         });
-        console.log(response.statusText);
     }
+    console.log("Missing index values added!");
 }

@@ -40,7 +40,7 @@ function generateRegistryNumber(day: number, month: number, year: number): strin
         twoDay = day.toString();
     }
 
-    nrn = yearStr + "." + twoMonth + "." + twoDay + "-" + randLastThreeDigits + "." + randLastTwoDigits;
+    nrn = yearStr + twoMonth + twoDay + randLastThreeDigits + randLastTwoDigits;
 
     return nrn;
 }
@@ -64,7 +64,7 @@ function generateUser(): User {
     let firstName = faker.name.firstName();
     let lastName = faker.name.lastName();
     let birthDate = faker.date.birthdate({min: 18, max: 80, mode: 'age'});
-    let phoneNumber = faker.phone.phoneNumber('+32 47# ## ## ##');
+    let phoneNumber = faker.phone.phoneNumber('+3247#######');
     let email = faker.internet.email(firstName, lastName);
     let national_registryNumber = generateRegistryNumber(birthDate.getDate(), birthDate.getMonth() + 1, birthDate.getFullYear());
 
@@ -159,6 +159,7 @@ for(let i = 0; i < 10; i++) {
 
 //add employees to database
 export const addUsers = async() => {
+    console.log("Adding customers ...");
     for(let i = 0; i < 5; i++){
         const response = await fetch('http://localhost:3000/customers', {
             method: 'POST',
@@ -170,6 +171,9 @@ export const addUsers = async() => {
         });
     }
 
+    console.log("Customers added!");
+    console.log("Adding employees ...");
+
     for(let i = 0; i < 5; i++){
         const response = await fetch('http://localhost:3000/employees', {
             method: 'POST',
@@ -180,4 +184,6 @@ export const addUsers = async() => {
             }
         });
     }
+
+    console.log("Employees added!");
 }

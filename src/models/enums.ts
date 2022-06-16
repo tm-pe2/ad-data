@@ -11,18 +11,10 @@ export enum UserRole
     ADMIN = 9
 }
 
-export enum ContractStatus
-{
-    NOTVALID = 1,
-    ACTIVE = 2,
-    EXPIRED = 3,
-}
-
-export enum InvoiceType
-{
-    ADVANCE = 1,
-    DEBIT = 2,
-    CREDIT = 3
+export enum CONTRACT_STATUS {
+    NOT_VALIDATED = 1,
+    ACTIVE,
+    EXPIRED,
 }
 
 export enum PlanningStatus
@@ -31,11 +23,16 @@ export enum PlanningStatus
     DONE = 2
 }
 
-export enum InvoiceStatus
-{
+export enum INVOICE_TYPE {
+    ADVANCE = 1,
+    DEBIT,
+    CREDIT,
+}
+
+export enum INVOICE_STATUS {
     DUE = 1,
-    LATE = 2,
-    PAID = 3
+    LATE,
+    PAID,
 }
 
 export enum CustomerType

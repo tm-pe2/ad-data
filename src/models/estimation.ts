@@ -8,6 +8,7 @@ export interface Estimation {
     service_type: ServiceType,
     meters: Meter[],
     equipment: EquipmentType[],
+    estimated_consumption?: number
 }
 
 export interface Meter {
