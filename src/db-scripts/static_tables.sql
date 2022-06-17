@@ -37,7 +37,8 @@ INSERT INTO statuses_for_invoices (description)
 VALUES
     ('Due'),
     ('Late'),
-    ('Paid');
+    ('Paid'),
+    ('Reminded');
 
 INSERT INTO tariffs(customer_type, service_type, value)
 VALUES
