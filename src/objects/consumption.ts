@@ -41,7 +41,7 @@ const getMissingConsumptions = async (): Promise<Consumption[]> => {
     let currentDate: Date = new Date();
     indexedValues = await getAllIndexedValues();
     let counter = 0;
-
+    console.log("Initail index values ---------------------")
     for(let i = 0; i < indexedValues.length; i++) {
         let startIndexValue: number = indexedValues[i].index_value;
         let startDate: Date = new Date(indexedValues[i].read_date);
@@ -58,18 +58,19 @@ const getMissingConsumptions = async (): Promise<Consumption[]> => {
         meterToAdd.push(meter[0]);
         if(startDate.getFullYear() < currentDate.getFullYear())
         {
-            startDate.setFullYear(indexedValues[i].read_date.getFullYear() + 1)
+            startDate.setFullYear(indexedValues[i].read_date.getFullYear() + 1);
         }
-        
+
         let tmpConsumption: Consumption = {
             meters: meterToAdd,
             read_date: new Date(startDate),
             start_date: new Date(startDate)
         }
         consumptions.push(tmpConsumption);
-        counter += 1;
     }
-
+    console.log(indexedValues[0]);
+    console.log("Indexed values length : " + indexedValues.length);
+    console.log("--------------------------------------------")
     return consumptions;
 }
 
@@ -94,24 +95,26 @@ function generateDate(): Date {
 //fill array with generated data
 const fillConsumptionArray = async () => {
     await getContracts();
-    contracts.forEach(contract => {
+    for(let i = 0; i < contracts.length; i++) {
         let tmpDate: Date = generateDate();
-        contract.meters.forEach(meter => {
-            meter.index_value = getRandomInt(0,99999);
-        });
+        for(let j = 0; j < contracts[i].meters.length; j++) {
+            contracts[i].meters[j].index_value = getRandomInt(99,9999);
+        }
 
         let tempCons: Consumption = {
             start_date: tmpDate,
             read_date: tmpDate,
-            meters: contract.meters
+            meters: contracts[i].meters
         }
+
         firstConsumptions.push(tempCons);
-    });
+    }
 }
 
 //fill in first meter readings and activate contract
 export const addFirstIndexedValues = async () => {
     await fillConsumptionArray();
+    //console.log("First consumption length : " + firstConsumptions.length);
     console.log("Adding first readings ...\nActivating contracts ...")
     for(let i = 0; i < firstConsumptions.length; i++){
         const response = await fetch("http://localhost:3000/consumptions", {
@@ -129,16 +132,20 @@ export const addFirstIndexedValues = async () => {
 //add consumtions from start_date up until now
 export const addMissingConsumptions = async () => {
     const consumptions: Consumption[] = await getMissingConsumptions();
+    console.log("Missing consumption length : " + consumptions.length);
     console.log("Adding missing indexed values ...")
     for(let i = 0; i < consumptions.length; i++) {
-        const response = await fetch("http://localhost:3000/consumptions", {
-            method: 'POST',
-            body: JSON.stringify(consumptions[i]),
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            }
-        });
-    }
+        // const response = await fetch("http://localhost:3000/consumptions", {
+        //     method: 'POST',
+        //     body: JSON.stringify(consumptions[i]),
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         Accept: 'application/json',
+        //     }
+        // });
+       
+    } 
+    console.log(consumptions[0]);
     console.log("Missing index values added!");
+    console.log("--------------------------------------------")
 }

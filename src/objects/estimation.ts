@@ -2,6 +2,7 @@ import { Estimation, Meter} from '../models/estimation';
 import { Customer } from '../models/user';
 import { BuildingType, EquipmentType, MeterType } from '../models/enums';
 import fetch from 'node-fetch';
+import { CommandCompleteMessage } from 'pg-protocol/dist/messages';
 
 const baseUrl: string = 'http://localhost:3000/customers';
 let customers: Customer[] = [];
@@ -105,7 +106,6 @@ function generatePastConsumtion(estimation: number): number {
 
     //generate estimation between - 10% of anual est & + 10% of est
     let estimationNumber = getRandomInt((anualEstimation - (anualEstimation * 0.1)), (anualEstimation + (anualEstimation * 0.1)));
-    console.log(estimationNumber);
     return estimationNumber;
 }
 
@@ -184,8 +184,9 @@ const fillEstimationArray = async() => {
 // add estimations to db
 export const addEstimation = async () => {
     await fillEstimationArray();
+    //console.log("Estimations length : " + estimations.length);
     console.log("Adding estimations ...");
-    for(let i = 0; i <= estimations.length; i++){
+    for(let i = 0; i < estimations.length; i++){
         const response = await fetch("http://localhost:3000/estimations", {
             method: 'POST',
             body: JSON.stringify(estimations[i]),

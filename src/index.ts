@@ -9,8 +9,8 @@ const doWork = async () => {
     //await addUsers();
     //await addEstimation();
     //await addFirstIndexedValues();
-    //await addMissingConsumptions();
-    await fillInvoicesArray();
+    await addMissingConsumptions();
+    //await fillInvoicesArray();
     end();
 }
 
