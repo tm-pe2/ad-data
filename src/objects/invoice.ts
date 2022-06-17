@@ -47,9 +47,9 @@ export const fillInvoicesArray = async () => {
     const currentDate: Date = new Date();
     await getContractsWithMissingInvoices();
     //for(let i = 0; i < missingInvoices.length; i++) {
-    for(let i = 0; i < 1; i++) {
+    for(let i = 0; i < missingInvoices.length; i++) {
         let contract: Contract = await getContractById(missingInvoices[i].contract_id);
-
+        //console.log(contract);
         //check anual Invoice
         if(missingInvoices[i].read_date.getFullYear() < currentDate.getFullYear()) {
 
@@ -74,10 +74,5 @@ export const fillInvoicesArray = async () => {
             }
         }
     }
-
-    advanceInvoices.forEach(inv => {
-        console.log(inv);
-    });
-
     console.log(advanceInvoices.length);
 }

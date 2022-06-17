@@ -43,7 +43,7 @@ function calculateEstimation(estimation: Estimation): number {
         default:
             {
                 // Quick fix
-                calc_estimation += 20 * estimation.family_size;
+                calc_estimation += 80;
                 break;
             }
     }
@@ -51,7 +51,7 @@ function calculateEstimation(estimation: Estimation): number {
     //electricity consumption is adjusted depending on building type. e.g: closed house can get warmer easier than an open building, etc:
 
     switch (estimation.building_type) {
-        case BuildingType.APARTMENT:
+        case BuildingType.SEMI_DETACHED:
             {
                 calc_estimation -= 5;
                 break;
@@ -66,6 +66,9 @@ function calculateEstimation(estimation: Estimation): number {
                 calc_estimation += 5;
                 break;
             }
+        default: {
+            break;
+        }
     }
 
     //the amount of kWh consumed in a day from an appliance is added to the estimated consumption
@@ -102,7 +105,7 @@ function generatePastConsumtion(estimation: number): number {
 
     //generate estimation between - 10% of anual est & + 10% of est
     let estimationNumber = getRandomInt((anualEstimation - (anualEstimation * 0.1)), (anualEstimation + (anualEstimation * 0.1)));
-    
+    console.log(estimationNumber);
     return estimationNumber;
 }
 
@@ -154,8 +157,8 @@ function generateEstimation(addressID: number): Estimation {
     let estimation: Estimation = {
         past_consumption: 1,           //  will be generated later -> depends on calculated estimation
         address_id: addressID,
-        family_size: getRandomInt(1,6),
-        building_type: getRandomInt(0,3),
+        family_size: getRandomInt(1,4),
+        building_type: getRandomInt(1,3),
         service_type: getRandomInt(1,2),
         meters: generateMeters(),
         equipment: equipmentArray
