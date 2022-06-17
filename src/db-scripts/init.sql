@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS meters (
 CREATE TABLE IF NOT EXISTS indexed_values (
     id SERIAL PRIMARY KEY,
     meter_id INT NOT NULL,
-    index_value INT NOT NULL,
+    index_value float4 NOT NULL,
     read_date DATE NOT NULL,
     CONSTRAINT fk_meter FOREIGN KEY(meter_id) REFERENCES meters(id)
 );
